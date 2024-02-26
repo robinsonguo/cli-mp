@@ -2,6 +2,7 @@ const chalk = require("chalk");
 const { cosmiconfigSync } = require("cosmiconfig");
 const schema = require("./schema.json");
 const Ajv = require("ajv");
+const betterAjvErrors = require("better-ajv-errors").default;
 const ajv = new Ajv();
 const configLoader = cosmiconfigSync("tool");
 
@@ -14,7 +15,8 @@ module.exports = function getConfig() {
     const isValid = ajv.validate(schema, result.config);
     if (!isValid) {
       console.log(chalk.yellow("Invalid configuration was supplied"));
-      console.log(ajv.errors);
+      console.log();
+      console.log(betterAjvErrors(schema, result.config, ajv.errors));
       process.exit(1);
     }
     console.log("Found configuration", result.config);

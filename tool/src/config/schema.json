@@ -1,7 +1,5 @@
 {
   "properties": {
-    "port": {
-      "type": "number"
-    }
+    "port": { "type": "number" }
   }
 }
